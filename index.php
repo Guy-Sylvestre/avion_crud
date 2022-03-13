@@ -58,46 +58,7 @@
           <div class="row mt-3" id="table_avion">
               <div class="col-lg-12">
                   <div class="table-reponsible" id="showAvion">
-                      <table id="example" class="table pt-4 table-striped table-sm table-bordered">
-                          <thead>
-                                <tr class="text-center">
-                                    <th>ID</th>
-                                    <th>Nom</th>
-                                    <th>plan intern</th>
-                                    <th>dispositive de siege</th>
-                                    <th>plan de cabine</th>
-                                    <th>plan de pilotage</th>
-                                    <th>couleur amenagement</th>
-                                    <th>epaisseur vitre</th>
-                                    <th>lampes temoin</th>
-                                    <td>action</td>
-                                </tr>
-                          </thead>
-                          <tbody> 
-                              
-                              <?php for ($i=1; $i<=100; $i++): ?>
-
-                                <tr class="text-center text-secondary">
-                                <td> <?= $i ?></td>
-                                <td>item <?= $i ?></td>
-                                <td>item <?= $i ?></td>
-                                <td>item <?= $i ?></td>
-                                <td>item <?= $i ?></td>
-                                <td>item <?= $i ?></td>
-                                <td>item <?= $i ?></td>
-                                <td>item <?= $i ?></td>
-                                <td>item <?= $i ?></td>
-                                <td>
-                                    <a href="#" title="Voir les detail" class="text-success"><i class="bi bi-info-circle"></i></a>&nbsp; &nbsp;
-                                    <a href="#" title="Edit" class="text-primary"><i class="bi bi-pencil-square"></i></a>&nbsp; &nbsp;
-                                    <a href="#" title="Delete" class="text-danger"><i class="bi bi-trash3-fill"></i></a>
-                                </td>
-                                </tr>
-
-                            <?php endfor; ?>
-                              
-                          </tbody>
-                      </table>
+                      
                   </div>
               </div>
           </div>
@@ -174,8 +135,28 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+
+            show_all_avion();
+
+            function show_all_avion() {
+                $.ajax({
+                    url: "action.php",
+                    type: "POST",
+                    data: {action: "view"},
+                    success: function(response) {
+                        console.log(response);
+                        $("#showAvion").html(response);
+                    }
+                });
+            }
+
+
+
+
             $('#example').DataTable();
-        } );
+
+        });
+        
     </script>
 </body>
 </html>
