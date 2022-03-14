@@ -73,50 +73,55 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="" id="form-data">
+                    <form autocomplete="off" enctype="multipart/form-data" method="post" id="form-data-avion">
 
                         <div class="from-group mb-3">
-                            <label for="navion" class="form-label">Nom de l’avion</label>
-                            <input type="text" name="navion" id="navion" class="form-control" required>
+                            <input type="text" name="navion" placeholder="Nom de l'avion" id="navion" class="form-control">
                         </div>
 
                         <div class="from-group mb-3">
+
                             <label for="p_internte_img" class="form-label">Plan interne de l’avion</label>
-                            <input type="file" name="p_internte_img" id="p_internte_img" class="form-control" required>
+                            <span class="text-danger" id="errorsMs_1"></span>
+                            <input type="file" name="p_internte_img" id="p_internte_img" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="d_siege_img" class="form-label">Disposition des sièges</label>
-                            <input type="file" name="d_siege_img" id="d_siege_img" class="form-control" required>
+                            <span class="text-danger" id="errorsMs_2"></span>
+                            <input type="file" name="d_siege_img" id="d_siege_img" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="p_cabine_img" class="form-label">Plan de la cabine</label>
-                            <input type="file" name="p_cabine_img" id="p_cabine_img" class="form-control" required>
+                            <span class="text-danger" id="errorsMs_3"></span>
+                            <input type="file" name="p_cabine_img" id="p_cabine_img" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="p_pilotage_img" class="form-label">Plan du poste de pilotage</label>
-                            <input type="file" name="p_pilotage_img" id="p_pilotage_img" class="form-control" required>
+                            <span class="text-danger" id="errorsMs_4"></span>
+                            <input type="file" name="p_pilotage_img" id="p_pilotage_img" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="c_amenagement_intern" class="form-label">Couleur des aménagements internes</label>
-                            <input type="file" name="c_amenagement_intern" id="c_amenagement_intern" class="form-control" required>
+                            <input type="text" name="c_amenagement_intern" id="c_amenagement_intern" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="e_vitre" class="form-label">Epaisseur vitres</label>
-                            <input type="text" name="e_vitre" id="e_vitre" class="form-control" required>
+                            <input type="text" name="e_vitre" id="e_vitre" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="lampes_temoin" class="form-label">lampes temoin hors circuit</label>
-                            <input type="text" name="lampes_temoin" id="lampes_temoin" class="form-control" required>
+                            <label for="lampes_temoin" class="form-label">Epaisseur vitres</label>
+                            <input type="text" name="lampes_temoin" id="lampes_temoin" class="form-control" >
                         </div>
+                        
 
                         <div class="form-group">
-                            <input type="submit" value="Ajouter un avion" name="inert" id="insert" class="btn btn-danger form-control btn-block">
+                            <input type="submit" value="Ajouter un avion" name="insert-avion" id="insert" class="btn btn-danger form-control btn-block">
                         </div>
                     </form>
                 </div>
@@ -138,22 +143,47 @@
 
             show_all_avion();
 
+            // Afficher tous les avion enregistrés dans la base de données
             function show_all_avion() {
                 $.ajax({
                     url: "action.php",
                     type: "POST",
-                    data: {action: "view"},
+                    data: {action: "views-avion"},
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
                         $("#showAvion").html(response);
+                        $('#example').DataTable();
                     }
                 });
             }
 
+            // Insert des information relative a un avion dans la base de donnée
+            $("#insert").click(function(e) {
+                if($("#form-data-avion")) {
+                    // console.log('okkkkk');
+                    e.preventDefault();
+                    let fom_data = new FormData();
+                    let imgp_internte_img = $("#p_internte_img")[0].files;
+                    let d_siege_img = $("#d_siege_img")[0].files;
+                    let p_cabine_img = $("#p_cabine_img")[0].files;
+                    let p_pilotage_img = $("#p_pilotage_img")[0].files;
 
+                    console.log(imgp_internte_img[0]);
+                    console.log(d_siege_img[0]);
+                    console.log(p_cabine_img[0]);
+                    console.log(p_pilotage_img[0]);
 
-
-            $('#example').DataTable();
+                    $.ajax({
+                        url: "action.php",
+                        type: "post",
+                        data: $("#form-data-avion").serialize() + "&action=insert-avion", //Seriliser les donnée pour les envoie dans un tableu
+                        success:function(response){
+                            console.log(response);
+                            
+                        }
+                    });
+                }
+            });
 
         });
         

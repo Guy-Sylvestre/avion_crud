@@ -21,12 +21,17 @@ class Database {
     // Fonction d'insetion (enregistrement) d'un avion dans la base de donnee (MySQL)
     public function insert_avion($navion, $p_internte_img, $d_siege_img, $p_cabine_img, $p_pilotage_img, $c_amenagement_intern, $e_vitre, $lampes_temoin) {
             $sql = "INSERT INTO `avion` (`id`, `nom`, `plan_internte_image`, `disposition_siege_image`, `plan_cabine_image`, `plan_pilotage_image`, `couleur_amenagement_interne`, `epaisseur_vitre`, `lampes_temoin_hors_circuit`, `creer`) 
-                VALUES (:navion, :p_internte_img, :d_siege_img, :p_cabine_img, :p_pilotage_img, :c_amenagement_intern, :e_vitre, :lampes_temoin, current_timestamp());";
+                VALUES (NULL, :navion, :p_internte_img, :d_siege_img, :p_cabine_img, :p_pilotage_img, :c_amenagement_intern, :e_vitre, :lampes_temoin, current_timestamp());";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['navion'=>$navion, 'p_internte_img'=>$p_internte_img, 'd_siege_img'=>$d_siege_img,
                 'p_cabine_img'=>$p_cabine_img, 'p_pilotage_img'=>$p_pilotage_img, 'c_amenagement_intern'=>$c_amenagement_intern,
                 'e_vitre'=>$e_vitre, 'lampes_temoin'=>$lampes_temoin]);
 
+            // if ($stmt) {
+            //     echo 'reussi';
+            // }else {
+            //     echo 'echoue';
+            // }
             return true;
     }
 

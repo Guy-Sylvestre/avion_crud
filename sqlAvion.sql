@@ -25,7 +25,7 @@ CREATE TABLE avion (
     plan_pilotage_image MEDIUMBLOB NULL NULL,
     couleur_amenagement_interne VARCHAR(100),
     epaisseur_vitre VARCHAR(100),
-    lampes_temoin_hors_circuit BOOLEAN,
+    lampes_temoin_hors_circuit VARCHAR(3),
     creer TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE =InnoDB  DEFAULT CHARSET=utf8 ;
 
