@@ -58,17 +58,46 @@ if (isset($_POST['action']) && $_POST['action'] == "views-avion") {
 if (isset($_POST['action']) && $_POST['action'] == "insert-avion") {
 
     $navion = $_POST['navion'];
-    $p_internte_img = $_FILES['p_internte_img']['name'];
-    $d_siege_img = $_FILES['d_siege_img']['name'];
-    $p_cabine_img = $_FILES['p_cabine_img']['name'];
-    $p_pilotage_img = $_FILES['p_pilotage_img']['size'];
+    // $p_internte_img = $_FILES['p_internte_img']['name'];
+    // $d_siege_img = $_FILES['d_siege_img']['name'];
+    // $p_cabine_img = $_FILES['p_cabine_img']['name'];
+    // $p_pilotage_img = $_FILES['p_pilotage_img']['size'];
     $c_amenagement_intern = $_POST['c_amenagement_intern'];
     $e_vitre = $_POST['e_vitre'];
     $lampes_temoin = $_POST['lampes_temoin'];
 
+    if (isset($navion) &&  isset($c_amenagement_intern) && isset($e_vitre)  && isset($lampes_temoin) ) {
+       if ($_FILES['p_internte_img']['error'] === 4) {
+           echo "Image n'existe pas";
+       }else{
+           $fileName = $_FILES['p_internte_img']['name'];
+           $fileSize = $_FILES['p_internte_img']['size'];
+           $tmpName = $_FILES['p_internte_img']['tmp_name'];
 
-    // print_r($_POST);
-    $insertion = $db->insert_avion($navion, $p_internte_img, $d_siege_img, $p_cabine_img, $p_pilotage_img, $c_amenagement_intern, $e_vitre, $lampes_temoin);
+           $valideImageExtension = ['jpg', 'jpeg', 'png'];
+           $imageExtension = explode('.', $fileName);
+           var_dump($fileName);
+        //    $imageExtension = strtolower(end($imageExtension));
+
+           if (!in_array($imageExtension[1], $valideImageExtension)) {
+               var_dump($imageExtension ."Extension de l'image invalide") ;
+           }else if ($fileSize > 1000000){
+               echo "La taille est trop grande";
+           }else {
+               $newImageName = uniqid();
+               $newImageName .= '.' . $imageExtension;
+
+               $p_internte_img = $newImageName;
+               move_uploaded_file($tmpName, 'images/avion/'. $p_internte_img);
+               
+               $insertion = $db->insert_avion($navion, $p_internte_img, $d_siege_img, $p_cabine_img, $p_pilotage_img, $c_amenagement_intern, $e_vitre, $lampes_temoin);
+
+               echo 'okkkkkkkkkkkkkkkkkkkkkkk';
+            }
+       }
+    }
+    print_r($_FILES['p_internte_img']['name']);
+    // $insertion = $db->insert_avion($navion, $p_internte_img, $d_siege_img, $p_cabine_img, $p_pilotage_img, $c_amenagement_intern, $e_vitre, $lampes_temoin);
     
 }
 

@@ -83,25 +83,25 @@
 
                             <label for="p_internte_img" class="form-label">Plan interne de l’avion</label>
                             <span class="text-danger" id="errorsMs_1"></span>
-                            <input type="file" name="p_internte_img" id="p_internte_img" class="form-control" >
+                            <input type="file" name="p_internte_img" accept=".git, .png, .jpg, webp" id="p_internte_img" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="d_siege_img" class="form-label">Disposition des sièges</label>
                             <span class="text-danger" id="errorsMs_2"></span>
-                            <input type="file" name="d_siege_img" id="d_siege_img" class="form-control" >
+                            <input type="file" name="d_siege_img" accept=".git, .png, .jpg, webp" id="d_siege_img" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="p_cabine_img" class="form-label">Plan de la cabine</label>
                             <span class="text-danger" id="errorsMs_3"></span>
-                            <input type="file" name="p_cabine_img" id="p_cabine_img" class="form-control" >
+                            <input type="file" name="p_cabine_img" accept=".git, .png, .jpg, webp" id="p_cabine_img" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="p_pilotage_img" class="form-label">Plan du poste de pilotage</label>
                             <span class="text-danger" id="errorsMs_4"></span>
-                            <input type="file" name="p_pilotage_img" id="p_pilotage_img" class="form-control" >
+                            <input type="file" name="p_pilotage_img" accept=".git, .png, .jpg, webp" id="p_pilotage_img" class="form-control" >
                         </div>
 
                         <div class="form-group mb-3">
@@ -157,7 +157,7 @@
                 });
             }
 
-            // Insert des information relative a un avion dans la base de donnée
+            // Insert des information relative a un avion dans la base de donnée [0].checkValidity()
             $("#insert").click(function(e) {
                 if($("#form-data-avion")) {
                     // console.log('okkkkk');
@@ -168,10 +168,11 @@
                     let p_cabine_img = $("#p_cabine_img")[0].files;
                     let p_pilotage_img = $("#p_pilotage_img")[0].files;
 
-                    console.log(imgp_internte_img[0]);
+                    console.log(imgp_internte_img[0]['name']);
                     console.log(d_siege_img[0]);
                     console.log(p_cabine_img[0]);
                     console.log(p_pilotage_img[0]);
+
 
                     $.ajax({
                         url: "action.php",
